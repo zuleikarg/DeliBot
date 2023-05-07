@@ -81,6 +81,11 @@ rosrun my_code interface.py
 ```
 Eighth Tab: When necessary in simulation, send signal to represent that the person took the package
 
+```sh
+rostopic pub /collected my_code/collect "collected: true"
+```
+
+
 Otherwise, if you just want to take a new photo for a employee:
 
 First Tab:
