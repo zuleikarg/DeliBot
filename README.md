@@ -40,7 +40,7 @@ The next step is executing the scripts in the terminals:
 
 First Tab:
 ```sh
-roslaunch turtlebot3_gazebo Office_worls.launch (MIRAR)
+roslaunch turtlebot3_gazebo Office_world.launch
 ```
 
 Second Tab:
@@ -68,9 +68,18 @@ rosrun my_code navigation.py
 
 Sixth Tab:
 
+
+```sh
+cd src/siam-mot/demos
+python demo.py
+```
+
+Seventh Tab: Select the goal person
+
 ```sh
 rosrun my_code interface.py
 ```
+Eighth Tab: When necessary in simulation, send signal to represent that the person took the package
 
 Otherwise, if you just want to take a new photo for a employee:
 
