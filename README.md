@@ -23,6 +23,11 @@ cd <route_to_DeliBot_root>
 catkin_make
 ```
 
+Also, it's compulsory to export the path of the folder as a parameter and it's recomended to include it in the _.bash_ archive:
+```sh
+export DELIBOT_PATH=<path_of_folder>
+```
+
 It is recommended that you specify the type of turtlebot model used, in this case, the **burger** one, in the _.bash_ archive:
 ```sh
 export TURTLEBOT3_MODEL=burger
