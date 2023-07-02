@@ -47,6 +47,8 @@ First Tab:
 ```sh
 roslaunch turtlebot3_gazebo Office_world.launch
 ```
+When gazebo have been loaded, you must remove the _waffle_ turtlebot.
+
 
 Second Tab:
 
