@@ -49,12 +49,12 @@ roslaunch turtlebot3_gazebo Office_world.launch
 ```
 When gazebo have been loaded, you must remove the _waffle_ turtlebot.
 
-
 Second Tab:
 
 ```sh
-roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<route_to_DeliBot_root>/src/siam-mot/Office.yaml
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path_to_DeliBot_folder>/Delibot/src/siam-mot/Office.yaml
 ```
+When rviz have been loaded, you must adjust the _burger_ turtlebot to the correct position with ''2D Pose Estimate''.
 
 Third Tab:
 
