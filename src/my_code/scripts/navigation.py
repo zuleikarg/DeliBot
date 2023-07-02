@@ -4,6 +4,7 @@
 import rospy
 import actionlib
 import openpyxl
+import requests
 
 from my_code.msg import data_employee, data_recognition, data_speech, collect
 
@@ -36,6 +37,8 @@ class MoveRobot:
         self.curr_ang_z = 0
 
         self.recognition = 0
+        self.id_tele =""
+
         self.message_s = data_speech()
         self.message_s.name = ""
         self.message_s.found = False
@@ -61,7 +64,8 @@ class MoveRobot:
         if(data.recog == True and self.spinning == True):
             self.recognition = self.recognition +1
         else:
-            self.recognition = 0
+            if(self.recognition<3):
+                self.recognition = 0
 
 
     def callback(self,data):
@@ -74,12 +78,13 @@ class MoveRobot:
         # Iterate the loop to read the cell values
         for row in dataframe1.iter_rows(1,dataframe1.max_row):
             if(row[0].value == data.name):
+                self.id_tele = row[3].value
                 break
         
-        aux = 3
+        aux = 4
         raw_pos = row[aux].value.split("_")
 
-        for j in range (3, len(row)):
+        for j in range (4, len(row)):
             raw_pos = row[aux].value.split("_")
 
             self.pos_x.append(raw_pos[0])
@@ -93,10 +98,12 @@ class MoveRobot:
 
         st = True
         self.start = True
+
+
         # Iterate the loop to read the cell values
 
     def spin_move(self,i):
-
+        # print("SPIN")
         self.spinning = True
 
         self.prev_pos_x = self.curr_pos_x
@@ -129,7 +136,7 @@ class MoveRobot:
             # print(f'Antes:{self.prev_ang_z}, Actual: {self.curr_ang_z}, Angle: {angle}')
 
             if(self.recognition < 3):
-                print(self.recognition)
+                # print(self.recognition)
                 message.angular.z = 0.1
                 self.message_s.found = False
             else:
@@ -151,7 +158,7 @@ class MoveRobot:
     def movebase_client(self,i):
 
         if(self.start == True):
-            print(i)
+            # print(i)
             # Create an action client called "move_base" with action definition file "MoveBaseAction"
             client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
                 
@@ -164,12 +171,12 @@ class MoveRobot:
             goal.target_pose.header.stamp = rospy.Time.now()
             # Move 0.5 meters forward along the axis of the "map" coordinate frame 
             if(i == -1):
-                goal.target_pose.pose.position.x = float(-1)
-                goal.target_pose.pose.position.y = float(0)
+                goal.target_pose.pose.position.x = float(-3.8)
+                goal.target_pose.pose.position.y = float(1)
 
                 goal.target_pose.pose.orientation.x = 0.0
                 goal.target_pose.pose.orientation.y = 0.0
-                goal.target_pose.pose.orientation.z = float(0)
+                goal.target_pose.pose.orientation.z = float(0.0)
                 goal.target_pose.pose.orientation.w = 1.0
 
             else:
@@ -220,6 +227,14 @@ if __name__ == '__main__':
             
             if(nav.collected == False):
                 nav.movebase_client(0)
+
+                TOKEN = "6091287301:AAEOOX5aOx_BeWiGsToPHNRMlIajqAnRyXE"
+                chat_id = str(nav.id_tele)
+                #print(chat_id)
+
+                message = "Tienes un paquete en el punto base. Por favor, vaya a recogerlo."
+                url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+                print(requests.get(url).json()) # this sends the message
             
             else:
                 nav.movebase_client(-1)

@@ -12,16 +12,6 @@ first_f = True
 
 def speech(data):
     global count, first_nf, first_f
-    # in spanish
-    # tts = gtts.gTTS("Hola, mi nombre es DeliBot", lang="es")
-    # tts.save("hola.mp3")
-    # playsound("hola.mp3")
-
-    # tts = gtts.gTTS("EL AFILADOR, EL AFILADOR", lang="es")
-    # tts.save("hola.mp3")
-    # playsound("hola.mp3")
-    # persona = "Pablo Juan"
-
 
     if(data.found == False):
         print(count)

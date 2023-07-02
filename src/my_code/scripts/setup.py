@@ -25,7 +25,7 @@ class InterEmplo(Frame):
         self.createWidgets()
 
     def finish(self, new_image, selection):
-
+        
         cv.imwrite("/home/zuleikarg/tfg_ros/src/siam-mot/demos/conocidos/"+selection +".jpg", new_image)
         cv.imwrite("/home/zuleikarg/.gazebo/models/face0/materials/textures/face0.jpg", new_image)
 
@@ -153,8 +153,18 @@ class InterEmplo(Frame):
         self.p1.pack(fill='both', expand=True)
         self.p1.pack(fill='both', expand=True)
 
-        self.combo = ttk.Combobox(self.p1, width= 20, height= 10, state="readonly",values=["Pablo Juan","Zuleika Redondo","Martín García","Ana Gómez", "Carlos Ramos", "María Pérez"])
-        self.combo.place(x=175,y=175)
+        # Define variable to load the dataframe
+        dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+        # Define variable to read sheet
+        dataframe1 = dataframe.active
+        
+        names = []
+        # Iterate the loop to read the cell values
+        for row in dataframe1.iter_rows(2,dataframe1.max_row):
+            names.append(row[0].value)
+
+        self.combo = ttk.Combobox(self.p1, width= 30, height= 10, state="readonly",values=names)
+        self.combo.place(x=140,y=175)
 
         self.display1 = Text(self.p1, width= 56, height= 1,font=("Arial", 11), relief=RAISED, bg='white', fg='black')
         self.display1.insert(INSERT,"Esta es la interfaz para la introducción de un empleado")
