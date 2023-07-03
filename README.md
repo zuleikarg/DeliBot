@@ -19,7 +19,7 @@ Once you get all the requirements, you must follow some steps to archieve the re
 First, you must compile the DeliBot folder as a ROS workspace. From a terminal:
 ```sh
 conda activate <environment_name>
-cd <route_to_DeliBot_root>
+cd <path_to_DeliBot_folder>
 catkin_make
 ```
 
@@ -37,7 +37,7 @@ If you don't follow the previous step, you must specify the turtlebot model used
 In addition, it is important that you follow the steps below in each terminal before executing the rest of the scripts:
 ```sh
 conda activate <environment_name>
-cd <route_to_DeliBot_root>
+cd <path_to_DeliBot_folder>
 source devel/setup.bash
 ```
 
@@ -52,7 +52,7 @@ When gazebo have been loaded, you must remove the _waffle_ turtlebot.
 Second Tab:
 
 ```sh
-roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path_to_DeliBot_folder>/Delibot/src/siam-mot/Office.yaml
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$DELIBOT_PATH/DeliBot/src/siam-mot/Office.yaml
 ```
 When rviz have been loaded, you must adjust the _burger_ turtlebot to the correct position with ''2D Pose Estimate''.
 
