@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import ttk
 from PIL import ImageTk, Image
 import openpyxl
+import os
 
 import rospy
 from my_code.msg import data_employee
@@ -15,6 +16,8 @@ class InterEmplo(Frame):
  
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
+        self.folder = os.environ.get('DELIBOT_PATH', '')
+        
         self.parent = master
         self.grid()
         self.once = 0
@@ -42,7 +45,7 @@ class InterEmplo(Frame):
             self.display2.config(state='disabled')
 
             # Define variable to load the dataframe
-            dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+            dataframe = openpyxl.load_workbook(self.folder + "/Delibot/src/my_code/datos_empleados.xlsx")
             # Define variable to read sheet
             dataframe1 = dataframe.active
             
@@ -59,7 +62,7 @@ class InterEmplo(Frame):
             self.display2.config(state='disabled')
 
             # Create an object of tkinter ImageTk
-            self.img = Image.open("/home/zuleikarg/tfg_ros/src/my_code/fotos/"+row[2].value +".png")
+            self.img = Image.open(self.folder + "/Delibot/src/my_code/fotos/"+row[2].value +".png")
 
             self.img = ImageTk.PhotoImage(self.img.resize((300,150), Image.Resampling.LANCZOS))
 
@@ -90,7 +93,7 @@ class InterEmplo(Frame):
 
 
         # Define variable to load the dataframe
-        dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+        dataframe = openpyxl.load_workbook(self.folder + "/Delibot/src/my_code/datos_empleados.xlsx")
         # Define variable to read sheet
         dataframe1 = dataframe.active
         

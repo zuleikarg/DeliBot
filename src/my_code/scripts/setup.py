@@ -10,7 +10,7 @@ import numpy as np
 import math
 import imutils
 
-from os import remove
+import os
 
 import rospy
 
@@ -19,6 +19,8 @@ class InterEmplo(Frame):
  
     def __init__(self, master, *args, **kwargs):
         Frame.__init__(self, master, *args, **kwargs)
+        self.folder = os.environ.get('DELIBOT_PATH', '')
+        
         self.parent = master
         self.grid()
         self.once = 0
@@ -26,10 +28,9 @@ class InterEmplo(Frame):
 
     def finish(self, new_image, selection):
         
-        cv.imwrite("/home/zuleikarg/tfg_ros/src/siam-mot/demos/conocidos/"+selection +".jpg", new_image)
-        cv.imwrite("/home/zuleikarg/.gazebo/models/face0/materials/textures/face0.jpg", new_image)
+        cv.imwrite(self.folder + "/Delibot/src/siam-mot/demos/conocidos/"+selection +".jpg", new_image)
 
-        remove("/home/zuleikarg/tfg_ros/src/siam-mot/demos/"+selection +".jpg")
+        os.remove(self.folder + "/Delibot/src/siam-mot/demos/"+selection +".jpg")
         
         self.quit()
 
@@ -46,8 +47,10 @@ class InterEmplo(Frame):
 
             cam.release()
 
+            image = cv.flip(image,1)
+
             detector = dlib.get_frontal_face_detector()
-            predictor = dlib.shape_predictor("/home/zuleikarg/tfg_ros/src/my_code/dataset/shape_predictor_68_face_landmarks.dat")
+            predictor = dlib.shape_predictor(self.folder + "/Delibot/src/my_code/dataset/shape_predictor_68_face_landmarks.dat")
 
             gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
             # Detect the face
@@ -96,7 +99,7 @@ class InterEmplo(Frame):
 
             if(new_image.size != 0):
 
-                cv.imwrite("/home/zuleikarg/tfg_ros/src/siam-mot/demos/"+selection +".jpg", new_image)
+                cv.imwrite(self.folder + "/Delibot/src/siam-mot/demos/"+selection +".jpg", new_image)
 
                 disp = "Se ha seleccionado al empleado "+selection
 
@@ -106,7 +109,7 @@ class InterEmplo(Frame):
                 self.display2.config(state='disabled')
 
                 # Define variable to load the dataframe
-                dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+                dataframe = openpyxl.load_workbook(self.folder + "/Delibot/src/my_code/datos_empleados.xlsx")
                 # Define variable to read sheet
                 dataframe1 = dataframe.active
                 
@@ -121,7 +124,7 @@ class InterEmplo(Frame):
                 self.display2.config(state='disabled')
 
                 # Create an object of tkinter ImageTk
-                self.img = Image.open("/home/zuleikarg/tfg_ros/src/siam-mot/demos/"+selection +".jpg")
+                self.img = Image.open(self.folder + "/Delibot/src/siam-mot/demos/"+selection +".jpg")
 
                 self.img = ImageTk.PhotoImage(self.img.resize((200,200), Image.Resampling.LANCZOS))
 
@@ -154,7 +157,7 @@ class InterEmplo(Frame):
         self.p1.pack(fill='both', expand=True)
 
         # Define variable to load the dataframe
-        dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+        dataframe = openpyxl.load_workbook(self.folder + "/Delibot/src/my_code/datos_empleados.xlsx")
         # Define variable to read sheet
         dataframe1 = dataframe.active
         

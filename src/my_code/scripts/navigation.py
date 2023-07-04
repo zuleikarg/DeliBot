@@ -5,6 +5,7 @@ import rospy
 import actionlib
 import openpyxl
 import requests
+import os
 
 from my_code.msg import data_employee, data_recognition, data_speech, collect
 
@@ -20,8 +21,14 @@ import numpy as np
 
 tam = 0
 st =False
+
+#INITIAL POSE - MODIFICABLE
+ini_pos =[3.8,1.0,0.0]
+
 class MoveRobot:
     def __init__(self):
+        self.folder = os.environ.get('DELIBOT_PATH', '')
+
         self.success = False
         self.start = False
         self.pos_x = []
@@ -71,7 +78,7 @@ class MoveRobot:
     def callback(self,data):
         global tam, st
         # Define variable to load the dataframe
-        dataframe = openpyxl.load_workbook("/home/zuleikarg/tfg_ros/src/my_code/datos_empleados.xlsx")
+        dataframe = openpyxl.load_workbook(self.folder + "/Delibot/src/my_code/datos_empleados.xlsx")
         # Define variable to read sheet
         dataframe1 = dataframe.active
         
@@ -171,12 +178,12 @@ class MoveRobot:
             goal.target_pose.header.stamp = rospy.Time.now()
             # Move 0.5 meters forward along the axis of the "map" coordinate frame 
             if(i == -1):
-                goal.target_pose.pose.position.x = float(-3.8)
-                goal.target_pose.pose.position.y = float(1)
+                goal.target_pose.pose.position.x = float(ini_pos[0])
+                goal.target_pose.pose.position.y = float(ini_pos[1])
 
                 goal.target_pose.pose.orientation.x = 0.0
                 goal.target_pose.pose.orientation.y = 0.0
-                goal.target_pose.pose.orientation.z = float(0.0)
+                goal.target_pose.pose.orientation.z = float(ini_pos[2])
                 goal.target_pose.pose.orientation.w = 1.0
 
             else:
