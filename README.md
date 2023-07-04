@@ -1,5 +1,7 @@
 # DeliBot
 
+Bachelor's Final Project related to a system for transporting package to a person using autonomous navigation and artificial inteligence. __Virtual version.__
+
 ## Requirements
 
 To make your computer capable of ejecute all the scripts and make them work together, some installatins are needed.
