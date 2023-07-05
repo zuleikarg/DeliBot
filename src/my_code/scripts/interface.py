@@ -62,7 +62,7 @@ class InterEmplo(Frame):
             self.display2.config(state='disabled')
 
             # Create an object of tkinter ImageTk
-            self.img = Image.open(self.folder + "/Delibot/src/my_code/fotos/"+row[2].value +".png")
+            self.img = Image.open(self.folder + "/Delibot/src/my_code/Departamentos/"+row[2].value +".png")
 
             self.img = ImageTk.PhotoImage(self.img.resize((300,150), Image.Resampling.LANCZOS))
 
