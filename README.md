@@ -2,6 +2,10 @@
 
 Bachelor's Final Project related to a system for transporting package to a person using autonomous navigation and artificial inteligence. __Virtual version.__
 
+You can watch the video with the results of this system on youtube: [Click here].
+
+If you want to see the __real robot version__: [DeliBot_Real].
+
 ## Requirements
 
 To make your computer capable of ejecute all the scripts and make them work together, some installatins are needed.
@@ -124,3 +128,5 @@ Some references that have been crucial to achieve the main objective are:
    [SiamMOT]: <https://github.com/amazon-science/siam-mot>
    [Maskrcnn-benchmark]: <https://github.com/facebookresearch/maskrcnn-benchmark>
    [Face Recognition]: <https://github.com/ageitgey/face_recognition>
+   [Click here]: <https://www.youtube.com/watch?v=lTXltNrzoxM>
+   [DeliBot_Real]: <https://github.com/zuleikarg/DeliBot_Real>
